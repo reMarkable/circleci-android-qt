@@ -20,7 +20,10 @@ RUN cd /tmp/qt && \
     wget -q http://download.qt.io/archive/qt/5.11/${QT_VERSION}/qt-opensource-linux-x64-${QT_VERSION}.run && \
     chmod +x qt-opensource-linux-x64-${QT_VERSION}.run && \
     ./qt-opensource-linux-x64-${QT_VERSION}.run --platform minimal --script /tmp/qt/qt-install-non-interactive.js && \
-    rm -rf /tmp/qt
+     rm -rf /tmp/qt
+USER root
+RUN mkdir -p /home/circleci/bin && wget http://remarkable.engineering/qpm/linux/qpm && cp qpm /home/circleci/bin/qpm && chmod a+x /home/circleci/bin/qpm
 
+USER circleci
 ENV ANDROID_NDK_ROOT ${ANDROID_NDK_HOME}
-ENV PATH ${PATH}:${ANDROID_NDK_HOME}:${HOME}/Qt/${QT_VERSION}/android_armv7/bin
+ENV PATH ${PATH}:${ANDROID_NDK_HOME}:${HOME}/Qt/${QT_VERSION}/android_armv7/bin:${HOME}/bin
